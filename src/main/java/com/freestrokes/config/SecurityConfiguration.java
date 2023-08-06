@@ -59,6 +59,8 @@ public class SecurityConfiguration {
                     "/swagger*/**",
                     "/api/v1/health-check",
                     "/api/v1/auth/**",
+                    "/api/v1/boards/**",
+                    "/api/v1/board-comments/**",
                     "/css/**",
                     "/exception/**",
                     "/favicon.ico",

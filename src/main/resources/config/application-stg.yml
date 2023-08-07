@@ -1,26 +1,16 @@
 # ============================================================
-# Spring Boot configuration for the "local" profile.
+# Spring Boot configuration for the "dev" profile.
 #
 # This configuration overrides the application.yml file.
 # ============================================================
 
-application:
-  endpoint: https://freestrokes.tistory.com/
-  user:
-    name: freestrokes
-    age: 30
-    gender: male
-  property:
-    test:
-      list: a,b,c
-
 server:
-  port: 8081
+  port: 8082
 
 logging:
   level:
-#    root: DEBUG
-#    tech.jhipster: ERROR
+    #    root: DEBUG
+    #    tech.jhipster: ERROR
     org.hibernate: INFO
 #    org.springframework.boot: ERROR
 #    com.kakaoi.mpc: DEBUG
@@ -30,7 +20,7 @@ logging:
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: stg
   jpa:
     open-in-view: false
     database: mysql
@@ -46,25 +36,6 @@ spring:
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-  thymeleaf:
-    cache: false
-  security:
-    jwt:
-      token:
-        secret-key: local-freestrokes-jwt-token-secret-key
-        access-token-expiration: 3600000 # 1H
-        refresh-token-expiration: 7200000 # 2H
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 443440250446-c4388vu7q2oahf1akjt5vf5570vfr9ov.apps.googleusercontent.com
-            client-secret: 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
-            scope: profile, email
-#          facebook:
-#            client-id: 465358593799840
-#            client-secret: a37286e3dae00dcdce628f40dfe363f5
-#            scope: profile, email
   datasource:
     url: jdbc:mysql://localhost:3307/testdb?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
     username: tester
@@ -79,8 +50,3 @@ spring:
   #        prepStmtCacheSqlLimit: 2048
   #        useServerPrepStmts: true
   #    initialization-mode: always
-
-#custom:
-#  oauth2:
-#    kakao:
-#      client-id: 1b8ff676ae01724ed77437f98d399543

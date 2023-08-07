@@ -17,7 +17,7 @@ services:
       - --collation-server=utf8mb4_unicode_ci
     volumes:
       - ./.volumes:/var/lib/mysql --user 1000
-      - ./config/local-db:/docker-entrypoint-initdb.d
+      - ./config/db:/docker-entrypoint-initdb.d
       - ./config:/etc/mysql/conf.d
     ports:
       - "3307:3306"

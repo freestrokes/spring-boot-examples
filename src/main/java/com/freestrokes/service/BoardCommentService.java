@@ -13,20 +13,19 @@ import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
-public class BoardCommentService {
+public class BoardCommentService implements BoardCommentRequestService {
 
     private final BoardRepository boardRepository;
     private final BoardCommentRepository boardCommentRepository;
 
     /**
      * 게시글 댓글 등록
-     *
-     * @param boardCommentRequestDto
-     * @return
-     * @throws Exception
+     * @param boardCommentRequestDto 게시글 댓글 정보
+     * @return 등록한 게시글 댓글 정보
      */
+    @Override
     @Transactional
-    public BoardCommentDto.ResponseDto postBoardComment(BoardCommentDto.RequestDto boardCommentRequestDto) throws Exception {
+    public BoardCommentDto.ResponseDto postBoardComment(BoardCommentDto.RequestDto boardCommentRequestDto) {
 
         // 게시글 조회
         Board findBoard = boardRepository.findById(boardCommentRequestDto.getBoardId()).orElseThrow(NoSuchElementException::new);
@@ -51,15 +50,14 @@ public class BoardCommentService {
     }
 
     /**
-     * 게시글 댓글 수정
-     *
-     * @param boardCommentId
-     * @param boardCommentRequestDto
-     * @return
-     * @throws Exception
+     * 게시글 댓글 ID를 이용한 게시글 댓글 수정.
+     * @param boardCommentId 게시글 댓글 ID
+     * @param boardCommentRequestDto 게시글 댓글 정보
+     * @return 수정한 게시글 댓글 정보
      */
+    @Override
     @Transactional
-    public BoardCommentDto.ResponseDto putBoardComment(String boardCommentId, BoardCommentDto.RequestDto boardCommentRequestDto) throws Exception {
+    public BoardCommentDto.ResponseDto putBoardComment(String boardCommentId, BoardCommentDto.RequestDto boardCommentRequestDto) {
 
         // 게시글 댓글 조회
         BoardComment findBoardComment = boardCommentRepository.findById(boardCommentId).orElseThrow(NoSuchElementException::new);
@@ -100,13 +98,12 @@ public class BoardCommentService {
     }
 
     /**
-     * 게시글 댓글 삭제
-     *
-     * @param boardCommentId
-     * @throws Exception
+     * 게시글 댓글 ID를 이용한 게시글 댓글 삭제
+     * @param boardCommentId 게시글 댓글 ID
      */
+    @Override
     @Transactional
-    public void deleteBoardComment(String boardCommentId) throws Exception {
+    public void deleteBoardComment(String boardCommentId) {
         // 게시글 댓글 삭제
         boardCommentRepository.deleteById(boardCommentId);
     }

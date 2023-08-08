@@ -42,6 +42,7 @@ public class BoardController {
      * @throws Exception
      */
     @GetMapping(path = PathConstants.BOARDS, produces = "application/json")
+    // TODO: AOP 확인을 위해 추가 (@LogExecutionTime)
     @LogExecutionTime
     public ResponseEntity<List<BoardDto.ResponseDto>> getBoards() throws Exception {
 
@@ -85,17 +86,16 @@ public class BoardController {
     }
 
     /**
-     * 게시글 삭제
-     *
-     * @param id
+     * 게시글 ID를 이용한 게시글 삭제
+     * @param boardId 게시글 ID
      * @return
      * @throws Exception
      */
     @DeleteMapping(path = PathConstants.BOARD, produces = "application/json")
     public ResponseEntity<?> deleteBoard(
-        @PathVariable String id
+        @PathVariable String boardId
     ) throws Exception {
-        boardService.deleteBoard(id);
+        boardService.deleteBoard(boardId);
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 

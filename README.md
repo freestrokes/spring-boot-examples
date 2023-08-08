@@ -47,5 +47,3 @@ docker compose up -d
 | spring.security.jwt.token                  | secret-key               | JWT 서명에 사용할 Secret Key                   |
 | spring.security.jwt.token                  | access-token-expiration  | JWT Access Token 만료 설정                   |
 | spring.security.jwt.token                  | refresh-token-expiration | JWT Refrech Token 만료 설정                  |
-| application.registry          | public-endpoint   | Registry 외부 접근 Endpoint Template (`{projectName}` 적용 시 템플릿 화) |
-| application.registry          | internal-endpoint | Registry 내부 접근 Endpoint Template (`{projectName}` 적용 시 템플릿 화) |

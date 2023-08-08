@@ -31,6 +31,12 @@ spring:
   config:
     activate:
       on-profile: dev
+#  profiles:
+#    include:
+#      - mock-iam
+#      - mock-storage
+#      - mock-deploy
+#      - mock-uclog
   jpa:
     open-in-view: false
     database: mysql

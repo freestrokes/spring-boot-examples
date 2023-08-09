@@ -7,7 +7,8 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
+//import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.servers.Server;
 import lombok.Getter;
@@ -36,13 +37,45 @@ import static org.springdoc.core.SpringDocUtils.getConfig;
 //    name = "X-Auth-Token",
 //    in = SecuritySchemeIn.HEADER
 //)
-//@OpenAPIDefinition(
-//    info = @Info(title = "채팅서비스 API 명세서",
-//        description = "헥사고날 아키텍처 기반 채팅 서비스 API 명세서",
-//        version = "v1"))
-//@RequiredArgsConstructor
+@OpenAPIDefinition(
+    info = @Info(
+        title = "Spring Boot Examples API",
+        description = "Spring Boot Examples API",
+        version = "v1.0.0"
+    )
+)
+@RequiredArgsConstructor
 @Configuration
 public class SwaggerConfiguration {
+
+    @Bean
+    public GroupedOpenApi authApi() {
+        return GroupedOpenApi.builder()
+            .group("Auth")
+            .pathsToMatch("/api/v1/auth/**")
+            .packagesToScan("com.freestrokes.auth.controller") // package 필터 설정
+            .build();
+    }
+
+    @Bean
+    public GroupedOpenApi boardApi() {
+        return GroupedOpenApi.builder()
+            .group("Board")
+            .pathsToMatch("/api/v1/boards/**")
+            .build();
+    }
+
+    @Bean
+    public GroupedOpenApi boardCommentApi() {
+        String[] api = {"/api/v1/board-comments/**"};
+        String[] excludeApi = {"/api/health-check"};
+        return GroupedOpenApi.builder()
+            .group("Board Comment")
+            .pathsToMatch(api)
+            .pathsToExclude(excludeApi)
+            .build();
+    }
+
 //    private final ApplicationProperties applicationProperties;
 //
 //    public SwaggerConfiguration(ApplicationProperties applicationProperties) {

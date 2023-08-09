@@ -32,7 +32,7 @@ dependencies {
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 //    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.2'
 //	implementation 'mysql:mysql-connector-java'
-	runtimeOnly "com.mysql:mysql-connector-j"
+	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation 'junit:junit:4.13.2'
     implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
 	implementation 'org.projectlombok:lombok'

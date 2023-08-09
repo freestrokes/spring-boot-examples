@@ -1,5 +1,6 @@
 package com.freestrokes.config;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.servers.Server;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springdoc.core.GroupedOpenApi;
 import org.springdoc.core.SpringDocUtils;
@@ -28,12 +30,17 @@ import java.util.Properties;
 
 import static org.springdoc.core.SpringDocUtils.getConfig;
 
-@SecurityScheme(
-    type = SecuritySchemeType.APIKEY,
-    description =  "marketplace KIC IAM Access Token",
-    name = "X-Auth-Token",
-    in = SecuritySchemeIn.HEADER
-)
+//@SecurityScheme(
+//    type = SecuritySchemeType.APIKEY,
+//    description =  "marketplace KIC IAM Access Token",
+//    name = "X-Auth-Token",
+//    in = SecuritySchemeIn.HEADER
+//)
+//@OpenAPIDefinition(
+//    info = @Info(title = "채팅서비스 API 명세서",
+//        description = "헥사고날 아키텍처 기반 채팅 서비스 API 명세서",
+//        version = "v1"))
+//@RequiredArgsConstructor
 @Configuration
 public class SwaggerConfiguration {
 //    private final ApplicationProperties applicationProperties;
@@ -48,7 +55,8 @@ public class SwaggerConfiguration {
 //    @Bean
 //    public GroupedOpenApi vmAPI() {
 //        String[] vm = {"/v1/**"};
-//        return GroupedOpenApi.builder().group("공유 마켓플레이스 상품 API").pathsToMatch(vm).addOpenApiCustomiser(buildSecurityOpenApi())
+//        return GroupedOpenApi.builder().group("공유 마켓플레이스 상품 API").pathsToMatch(vm).addOpenApiCustomiser(buildSecurity
+//        OpenApi())
 //                .build();
 //    }
 //

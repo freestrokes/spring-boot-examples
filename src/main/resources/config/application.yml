@@ -8,10 +8,16 @@ server:
   port: 8080
 
 springdoc:
-  default-consumes-media-type: application/json
-  default-produces-media-type: application/json
+  packages-to-scan: com.freestrokes
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
   swagger-ui:
-    operations-sorter: alpha
-    tags-sorter: alpha
+    operations-sorter: method
+    tags-sorter: method
     path: /swagger-ui.html
     disable-swagger-default-url: true
+    display-query-params-without-oauth2: true
+    doc-expansion: none
+  api-docs:
+    groups:
+      enabled: true

@@ -37,6 +37,9 @@ spring:
 #      - mock-storage
 #      - mock-deploy
 #      - mock-uclog
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   jpa:
     open-in-view: false
     database: mysql

@@ -17,7 +17,7 @@ springdoc:
     path: /swagger-ui.html
     disable-swagger-default-url: true
     display-query-params-without-oauth2: true
-    doc-expansion: none
+    doc-expansion: list
   api-docs:
     groups:
       enabled: true

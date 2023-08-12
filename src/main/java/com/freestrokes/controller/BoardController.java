@@ -39,20 +39,15 @@ public class BoardController {
 //        this.boardService = boardService;
 //    }
 
-    /**
-     * 게시글 목록 조회
-     *
-     * @return
-     * @throws Exception
-     */
     @GetMapping(path = PathConstants.BOARDS, produces = "application/json")
     @Operation(
         summary = "게시글 목록 조회",
-        description = "Pagination을 이용하여 게시글 목록을 조회한다."
+        description = "페이징을 이용한 게시글 목록을 조회한다."
     )
     // TODO: AOP 확인을 위해 추가 (@LogExecutionTime)
     @LogExecutionTime
     public ResponseEntity<Page<BoardDto.ResponseDto>> getBoards(
+        // TODO: size, sort, direction 프로퍼티를 설정한 @PageableDefault 예시
 //        @ParameterObject @PageableDefault(size = 10, sort = "modifiedAt", direction = Sort.Direction.DESC) Pageable pageable
         @ParameterObject @PageableDefault(size = 10) Pageable pageable
     ) throws Exception {
@@ -64,14 +59,11 @@ public class BoardController {
         return new ResponseEntity<Page<BoardDto.ResponseDto>>(result, HttpStatus.OK);
     }
 
-    /**
-     * 게시글 등록
-     *
-     * @param boardRequestDto`
-     * @return
-     * @throws Exception
-     */
     @PostMapping(path = PathConstants.BOARDS, produces = "application/json")
+    @Operation(
+        summary = "게시글 등록",
+        description = "게시글 정보를 등록한다."
+    )
     public ResponseEntity<BoardDto.ResponseDto> postBoard(
         @RequestBody BoardDto.RequestDto boardRequestDto
     ) throws Exception {
@@ -79,33 +71,26 @@ public class BoardController {
         return new ResponseEntity<BoardDto.ResponseDto>(result, HttpStatus.OK);
     }
 
-    /**
-     * 게시글 수정
-     *
-     * @param id
-     * @param boardRequestDto
-     * @return
-     * @throws Exception
-     */
     @PutMapping(path = PathConstants.BOARD, produces = "application/json")
+    @Operation(
+        summary = "게시글 수정",
+        description = "게시글 ID를 이용하여 게시글 정보를 수정한다."
+    )
     public ResponseEntity<BoardDto.ResponseDto> putBoard(
-        @PathVariable String id,
+        @PathVariable("boardId") String boardId,
         @RequestBody BoardDto.RequestDto boardRequestDto
     ) throws Exception {
-        BoardDto.ResponseDto result = boardService.putBoard(id, boardRequestDto);
+        BoardDto.ResponseDto result = boardService.putBoard(boardId, boardRequestDto);
         return new ResponseEntity<BoardDto.ResponseDto>(result, HttpStatus.OK);
     }
 
-    /**
-     * 게시글 ID를 이용한 게시글 삭제
-     *
-     * @param boardId 게시글 ID
-     * @return
-     * @throws Exception
-     */
     @DeleteMapping(path = PathConstants.BOARD, produces = "application/json")
+    @Operation(
+        summary = "게시글 삭제",
+        description = "게시글 ID를 이용하여 게시글 정보를 삭제한다."
+    )
     public ResponseEntity<?> deleteBoard(
-        @PathVariable String boardId
+        @PathVariable("boardId") String boardId
     ) throws Exception {
         boardService.deleteBoard(boardId);
         return new ResponseEntity<>("{}", HttpStatus.OK);

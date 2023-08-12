@@ -5,9 +5,13 @@ import com.freestrokes.domain.BoardComment;
 import com.freestrokes.dto.BoardDto;
 import com.freestrokes.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -21,7 +25,6 @@ public class BoardService implements BoardRequestService {
     // TODO: proxy 객체
     // 연관관계 매핑된 객체 조회시 hibernate interceptor에 의해 proxy 객체가 생성되는 경우가 있음
     // proxy 객체의 필드 중 하나를 get 해오면 영속 상태의 객체로 매핑됨.
-    // 이 부분 찾아서 확인해보기.
 
     // TODO: @Transactional(readOnly = true)
     // 서비스 계층에서 트랙잭션을 시작하면 repository 계층에서도 해당 트랜잭션을 전파 받아서 사용.
@@ -32,17 +35,20 @@ public class BoardService implements BoardRequestService {
 
     /**
      * 게시글 목록을 조회
+     * @param pageable 페이징 정보
      * @return 게시글 목록
      */
     @Override
     @Transactional(readOnly = true)
-    public List<BoardDto.ResponseDto> getBoards() {
-        // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
-        // 게시글 조회
-        List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll()
-            .stream()
-            .map(board -> {
-                return BoardDto.ResponseDto.builder()
+    public Page<BoardDto.ResponseDto> getBoards(Pageable pageable) {
+
+        Page<Board> findBoards = boardRepository.findAll(pageable);
+        List<BoardDto.ResponseDto> boardsResponseDto = new ArrayList<>();
+
+        // 조회한 게시글 목록에 대한 DTO 변환
+        findBoards.getContent().forEach(board -> {
+            boardsResponseDto.add(
+                BoardDto.ResponseDto.builder()
                     .boardId(board.getBoardId())
                     .title(board.getTitle())
                     .content(board.getContent())
@@ -57,9 +63,33 @@ public class BoardService implements BoardRequestService {
                                 .build();
                         }).collect(Collectors.toList())
                     )
-                    .build();
-            })
-            .collect(Collectors.toList());
+                    .build()
+            );
+        });
+
+        // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
+        // 게시글 조회
+//        List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll(pageable)
+//            .stream()
+//            .map(board -> {
+//                return BoardDto.ResponseDto.builder()
+//                    .boardId(board.getBoardId())
+//                    .title(board.getTitle())
+//                    .content(board.getContent())
+//                    .author(board.getAuthor())
+//                    .boardComments(
+//                        board.getBoardComments().stream().map(boardComment -> {
+//                            return BoardComment.builder()
+//                                .boardCommentId(boardComment.getBoardCommentId())
+//                                .board(board)
+//                                .content(boardComment.getContent())
+//                                .author(boardComment.getAuthor())
+//                                .build();
+//                        }).collect(Collectors.toList())
+//                    )
+//                    .build();
+//            })
+//            .collect(Collectors.toList());
 
         //TODO: CASE2) 1:N 양방향 매핑 조회 후 DTO 변환
 //        List<Board> boardList = boardRepository.findAll();
@@ -93,8 +123,10 @@ public class BoardService implements BoardRequestService {
 //                    .build()
 //            );
 //        }
+//
+//        return boardsResponseDto;
 
-        return boardsResponseDto;
+        return new PageImpl<>(boardsResponseDto, pageable, findBoards.getTotalElements());
 
     }
 

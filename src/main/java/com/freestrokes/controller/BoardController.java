@@ -5,12 +5,16 @@ import com.freestrokes.properties.ApplicationProperties;
 import com.freestrokes.constants.PathConstants;
 import com.freestrokes.dto.BoardDto;
 import com.freestrokes.service.BoardService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 
 @RequiredArgsConstructor
 @RestController
@@ -42,21 +46,28 @@ public class BoardController {
      * @throws Exception
      */
     @GetMapping(path = PathConstants.BOARDS, produces = "application/json")
+    @Operation(
+        summary = "게시글 목록 조회",
+        description = "Pagination을 이용하여 게시글 목록을 조회한다."
+    )
     // TODO: AOP 확인을 위해 추가 (@LogExecutionTime)
     @LogExecutionTime
-    public ResponseEntity<List<BoardDto.ResponseDto>> getBoards() throws Exception {
+    public ResponseEntity<Page<BoardDto.ResponseDto>> getBoards(
+//        @ParameterObject @PageableDefault(size = 10, sort = "modifiedAt", direction = Sort.Direction.DESC) Pageable pageable
+        @ParameterObject @PageableDefault(size = 10) Pageable pageable
+    ) throws Exception {
 
         // TODO: ApplicationProperties 테스트를 위해 추가
         System.out.println("applicationProperties: " + applicationProperties);
 
-        List<BoardDto.ResponseDto> result = boardService.getBoards();
-        return new ResponseEntity<List<BoardDto.ResponseDto>>(result, HttpStatus.OK);
+        Page<BoardDto.ResponseDto> result = boardService.getBoards(pageable);
+        return new ResponseEntity<Page<BoardDto.ResponseDto>>(result, HttpStatus.OK);
     }
 
     /**
      * 게시글 등록
      *
-     * @param boardRequestDto
+     * @param boardRequestDto`
      * @return
      * @throws Exception
      */
@@ -87,6 +98,7 @@ public class BoardController {
 
     /**
      * 게시글 ID를 이용한 게시글 삭제
+     *
      * @param boardId 게시글 ID
      * @return
      * @throws Exception

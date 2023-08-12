@@ -1,6 +1,8 @@
 package com.freestrokes.service;
 
 import com.freestrokes.dto.BoardDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -11,9 +13,10 @@ public interface BoardRequestService {
 
     /**
      * 게시글 목록을 조회.
+     * @param pageable 페이징 정보
      * @return 게시글 목록
      */
-    List<BoardDto.ResponseDto> getBoards();
+    Page<BoardDto.ResponseDto> getBoards(Pageable pageable);
 
     /**
      * 게시글 등록.

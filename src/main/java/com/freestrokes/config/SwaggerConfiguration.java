@@ -49,11 +49,20 @@ import static org.springdoc.core.SpringDocUtils.getConfig;
 public class SwaggerConfiguration {
 
     @Bean
+    public GroupedOpenApi allApi() {
+        return GroupedOpenApi.builder()
+            .group("All")
+            .pathsToMatch("/api/v1/**")
+            .packagesToScan("com.freestrokes") // package 필터 설정
+            .build();
+    }
+
+    @Bean
     public GroupedOpenApi authApi() {
         return GroupedOpenApi.builder()
             .group("Auth")
             .pathsToMatch("/api/v1/auth/**")
-            .packagesToScan("com.freestrokes.auth.controller") // package 필터 설정
+            .packagesToScan("com.freestrokes.auth.controller")
             .build();
     }
 

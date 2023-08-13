@@ -16,6 +16,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 
+// TODO: @RequestMapping
+// 해당 컨트롤러 하위 전체 메서드에 공통 path 설정이 필요한 경우 class 상단에 어노테이션 사용.
+// @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @RestController
 public class BoardController {

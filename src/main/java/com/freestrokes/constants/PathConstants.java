@@ -33,6 +33,6 @@ public class PathConstants {
 	|-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
     public static final String BOARD_COMMENTS = API + "/board-comments";
-    public static final String BOARD_COMMENT = BOARD_COMMENTS + "/{boardId}";
+    public static final String BOARD_COMMENT = BOARD_COMMENTS + "/{boardCommentId}";
 
 }

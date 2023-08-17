@@ -45,7 +45,7 @@ public class BoardController {
     @GetMapping(path = PathConstants.BOARDS, produces = "application/json")
     @Operation(
         summary = "게시글 목록 조회",
-        description = "페이징을 이용한 게시글 목록을 조회한다."
+        description = "페이징을 이용하여 게시글 목록을 조회한다."
     )
     // TODO: AOP 확인을 위해 추가 (@LogExecutionTime)
     @LogExecutionTime

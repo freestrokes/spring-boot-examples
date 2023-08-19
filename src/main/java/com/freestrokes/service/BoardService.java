@@ -67,7 +67,7 @@ public class BoardService implements BoardRequestService {
             );
         });
 
-        // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환
+        // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환 (stream 이용한 방법)
         // 게시글 조회
 //        List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll(pageable)
 //            .stream()
@@ -91,7 +91,7 @@ public class BoardService implements BoardRequestService {
 //            })
 //            .collect(Collectors.toList());
 
-        //TODO: CASE2) 1:N 양방향 매핑 조회 후 DTO 변환
+        //TODO: CASE2) 1:N 양방향 매핑 조회 후 DTO 변환 (for문 이용한 방법)
 //        List<Board> boardList = boardRepository.findAll();
 //        List<BoardDto.ResponseDto> boardsResponseDto = new ArrayList<>();
 //

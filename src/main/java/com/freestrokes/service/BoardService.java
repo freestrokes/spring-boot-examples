@@ -5,6 +5,7 @@ import com.freestrokes.domain.BoardComment;
 import com.freestrokes.dto.BoardDto;
 import com.freestrokes.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -16,8 +17,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Service
+@Profile("!dev")
+@RequiredArgsConstructor
 public class BoardService implements BoardRequestService {
 
     private final BoardRepository boardRepository;

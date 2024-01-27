@@ -1,7 +1,8 @@
-package com.freestrokes.controller;
+package com.freestrokes.controller.board;
 
 import com.freestrokes.constants.PathConstants;
-import com.freestrokes.dto.BoardCommentDto;
+import com.freestrokes.dto.request.board.BoardCommentRequestDto;
+import com.freestrokes.dto.response.board.BoardCommentResponseDto;
 import com.freestrokes.service.BoardCommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,11 @@ public class BoardCommentController {
         summary = "게시글 댓글 등록",
         description = "게시글 댓글 정보를 등록한다."
     )
-    public ResponseEntity<BoardCommentDto.ResponseDto> postBoardComment(
-        @RequestBody BoardCommentDto.RequestDto boardCommentRequestDto
+    public ResponseEntity<BoardCommentResponseDto> postBoardComment(
+        @RequestBody BoardCommentRequestDto boardCommentRequestDto
     ) throws Exception {
-        BoardCommentDto.ResponseDto result = boardCommentService.postBoardComment(boardCommentRequestDto);
-        return new ResponseEntity<BoardCommentDto.ResponseDto>(result, HttpStatus.OK);
+        BoardCommentResponseDto result = boardCommentService.postBoardComment(boardCommentRequestDto);
+        return new ResponseEntity<BoardCommentResponseDto>(result, HttpStatus.OK);
     }
 
     @PutMapping(path = PathConstants.BOARD_COMMENT, produces = "application/json")
@@ -32,12 +33,12 @@ public class BoardCommentController {
         summary = "게시글 댓글 수정",
         description = "게시글 댓글 ID를 이용하여 게시글 댓글 정보를 수정한다."
     )
-    public ResponseEntity<BoardCommentDto.ResponseDto> putBoardComment(
+    public ResponseEntity<BoardCommentResponseDto> putBoardComment(
         @PathVariable String boardCommentId,
-        @RequestBody BoardCommentDto.RequestDto boardCommentRequestDto
+        @RequestBody BoardCommentRequestDto boardCommentRequestDto
     ) throws Exception {
-        BoardCommentDto.ResponseDto result = boardCommentService.putBoardComment(boardCommentId, boardCommentRequestDto);
-        return new ResponseEntity<BoardCommentDto.ResponseDto>(result, HttpStatus.OK);
+        BoardCommentResponseDto result = boardCommentService.putBoardComment(boardCommentId, boardCommentRequestDto);
+        return new ResponseEntity<BoardCommentResponseDto>(result, HttpStatus.OK);
     }
 
     @DeleteMapping(path = PathConstants.BOARD_COMMENT, produces = "application/json")

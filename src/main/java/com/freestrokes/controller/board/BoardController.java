@@ -1,9 +1,10 @@
-package com.freestrokes.controller;
+package com.freestrokes.controller.board;
 
 import com.freestrokes.aop.LogExecutionTime;
+import com.freestrokes.dto.request.board.BoardRequestDto;
+import com.freestrokes.dto.response.board.BoardResponseDto;
 import com.freestrokes.properties.ApplicationProperties;
 import com.freestrokes.constants.PathConstants;
-import com.freestrokes.dto.BoardDto;
 import com.freestrokes.service.BoardService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 
 // TODO: @RequestMapping
@@ -49,7 +49,7 @@ public class BoardController {
     )
     // TODO: AOP 확인을 위해 추가 (@LogExecutionTime)
     @LogExecutionTime
-    public ResponseEntity<Page<BoardDto.ResponseDto>> getBoards(
+    public ResponseEntity<Page<BoardResponseDto>> getBoards(
         // TODO: size, sort, direction 프로퍼티를 설정한 @PageableDefault 예시
 //        @ParameterObject @PageableDefault(size = 10, sort = "modifiedAt", direction = Sort.Direction.DESC) Pageable pageable
         @ParameterObject @PageableDefault(size = 10) Pageable pageable
@@ -58,8 +58,8 @@ public class BoardController {
         // TODO: ApplicationProperties 테스트를 위해 추가
         System.out.println("applicationProperties: " + applicationProperties);
 
-        Page<BoardDto.ResponseDto> result = boardService.getBoards(pageable);
-        return new ResponseEntity<Page<BoardDto.ResponseDto>>(result, HttpStatus.OK);
+        Page<BoardResponseDto> result = boardService.getBoards(pageable);
+        return new ResponseEntity<Page<BoardResponseDto>>(result, HttpStatus.OK);
     }
 
     @PostMapping(path = PathConstants.BOARDS, produces = "application/json")
@@ -67,11 +67,11 @@ public class BoardController {
         summary = "게시글 등록",
         description = "게시글 정보를 등록한다."
     )
-    public ResponseEntity<BoardDto.ResponseDto> postBoard(
-        @RequestBody BoardDto.RequestDto boardRequestDto
+    public ResponseEntity<BoardResponseDto> postBoard(
+        @RequestBody BoardRequestDto boardRequestDto
     ) throws Exception {
-        BoardDto.ResponseDto result = boardService.postBoard(boardRequestDto);
-        return new ResponseEntity<BoardDto.ResponseDto>(result, HttpStatus.OK);
+        BoardResponseDto result = boardService.postBoard(boardRequestDto);
+        return new ResponseEntity<BoardResponseDto>(result, HttpStatus.OK);
     }
 
     @PutMapping(path = PathConstants.BOARD, produces = "application/json")
@@ -79,12 +79,12 @@ public class BoardController {
         summary = "게시글 수정",
         description = "게시글 ID를 이용하여 게시글 정보를 수정한다."
     )
-    public ResponseEntity<BoardDto.ResponseDto> putBoard(
+    public ResponseEntity<BoardResponseDto> putBoard(
         @PathVariable("boardId") String boardId,
-        @RequestBody BoardDto.RequestDto boardRequestDto
+        @RequestBody BoardRequestDto boardRequestDto
     ) throws Exception {
-        BoardDto.ResponseDto result = boardService.putBoard(boardId, boardRequestDto);
-        return new ResponseEntity<BoardDto.ResponseDto>(result, HttpStatus.OK);
+        BoardResponseDto result = boardService.putBoard(boardId, boardRequestDto);
+        return new ResponseEntity<BoardResponseDto>(result, HttpStatus.OK);
     }
 
     @DeleteMapping(path = PathConstants.BOARD, produces = "application/json")

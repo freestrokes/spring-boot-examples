@@ -1,6 +1,6 @@
 package com.freestrokes;
 
-import com.freestrokes.controller.BoardController;
+import com.freestrokes.controller.board.BoardController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

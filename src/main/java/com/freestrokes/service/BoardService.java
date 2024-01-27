@@ -1,9 +1,10 @@
 package com.freestrokes.service;
 
-import com.freestrokes.domain.Board;
-import com.freestrokes.domain.BoardComment;
-import com.freestrokes.dto.BoardDto;
-import com.freestrokes.repository.BoardRepository;
+import com.freestrokes.domain.board.BoardCommentEntity;
+import com.freestrokes.domain.board.BoardEntity;
+import com.freestrokes.dto.request.board.BoardRequestDto;
+import com.freestrokes.dto.response.board.BoardResponseDto;
+import com.freestrokes.repository.board.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
@@ -42,22 +43,22 @@ public class BoardService implements BoardRequestService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<BoardDto.ResponseDto> getBoards(Pageable pageable) {
+    public Page<BoardResponseDto> getBoards(Pageable pageable) {
 
-        Page<Board> findBoards = boardRepository.findAll(pageable);
-        List<BoardDto.ResponseDto> boardsResponseDto = new ArrayList<>();
-
-        // 조회한 게시글 목록에 대한 DTO 변환
+        Page<BoardEntity> findBoards = boardRepository.findAll(pageable);
+        List<BoardResponseDto> boardsResponseDto = new ArrayList<>();
+//
+//        // 조회한 게시글 목록에 대한 DTO 변환
         findBoards.getContent().forEach(board -> {
             boardsResponseDto.add(
-                BoardDto.ResponseDto.builder()
+                BoardResponseDto.builder()
                     .boardId(board.getBoardId())
                     .title(board.getTitle())
                     .content(board.getContent())
                     .author(board.getAuthor())
                     .boardComments(
                         board.getBoardComments().stream().map(boardComment -> {
-                            return BoardComment.builder()
+                            return BoardCommentEntity.builder()
                                 .boardCommentId(boardComment.getBoardCommentId())
                                 .board(board)
                                 .content(boardComment.getContent())
@@ -71,17 +72,17 @@ public class BoardService implements BoardRequestService {
 
         // TODO: CASE1) 1:N 양방향 매핑 조회 후 DTO 변환 (stream 이용한 방법)
         // 게시글 조회
-//        List<BoardDto.ResponseDto> boardsResponseDto = boardRepository.findAll(pageable)
+//        List<BoardResponseDto> boardsResponseDto = boardRepository.findAll(pageable)
 //            .stream()
 //            .map(board -> {
-//                return BoardDto.ResponseDto.builder()
+//                return BoardResponseDto.builder()
 //                    .boardId(board.getBoardId())
 //                    .title(board.getTitle())
 //                    .content(board.getContent())
 //                    .author(board.getAuthor())
 //                    .boardComments(
 //                        board.getBoardComments().stream().map(boardComment -> {
-//                            return BoardComment.builder()
+//                            return BoardCommentEntity.builder()
 //                                .boardCommentId(boardComment.getBoardCommentId())
 //                                .board(board)
 //                                .content(boardComment.getContent())
@@ -94,17 +95,17 @@ public class BoardService implements BoardRequestService {
 //            .collect(Collectors.toList());
 
         //TODO: CASE2) 1:N 양방향 매핑 조회 후 DTO 변환 (for문 이용한 방법)
-//        List<Board> boardList = boardRepository.findAll();
-//        List<BoardDto.ResponseDto> boardsResponseDto = new ArrayList<>();
+//        List<BoardEntity> findBoards = boardRepository.findAll();
+//        List<BoardResponseDto> boardsResponseDto = new ArrayList<>();
 //
-//        for (Board board : boardList) {
-//            List<BoardComment> boardComments = new ArrayList<>();
+//        for (BoardEntity board : findBoards) {
+//            List<BoardCommentEntity> boardComments = new ArrayList<>();
 //
 //            // Board Comment DTO
 //            if (board.getBoardComments().size() > 0) {
 //                board.getBoardComments().stream().forEach(boardComment -> {
 //                    boardComments.add(
-//                        BoardComment.builder()
+//                        BoardCommentEntity.builder()
 //                            .boardCommentId(boardComment.getBoardCommentId())
 //                            .board(board)
 //                            .content(boardComment.getContent())
@@ -116,7 +117,7 @@ public class BoardService implements BoardRequestService {
 //
 //            // Board DTO
 //            boardsResponseDto.add(
-//                BoardDto.ResponseDto.builder()
+//                BoardResponseDto.builder()
 //                    .boardId(board.getBoardId())
 //                    .title(board.getTitle())
 //                    .content(board.getContent())
@@ -139,10 +140,10 @@ public class BoardService implements BoardRequestService {
      */
     @Override
     @Transactional
-    public BoardDto.ResponseDto postBoard(BoardDto.RequestDto boardRequestDto) {
+    public BoardResponseDto postBoard(BoardRequestDto boardRequestDto) {
 
         // TODO: Optional을 이용한 중복 체크가 필요한 경우
-//        Optional<Board> existBoard = boardRepository.findByTitle(boardRequestDto.getTitle());
+//        Optional<BoardEntity> existBoard = boardRepository.findByTitle(boardRequestDto.getTitle());
 //        existBoard.ifPresent(item -> {
 //            try {
 //                throw new Exception();
@@ -152,7 +153,7 @@ public class BoardService implements BoardRequestService {
 //        });
 
         // 게시글 생성
-        Board board = Board.builder()
+        BoardEntity board = BoardEntity.builder()
             .title(boardRequestDto.getTitle())
             .content(boardRequestDto.getContent())
             .author(boardRequestDto.getAuthor())
@@ -161,7 +162,7 @@ public class BoardService implements BoardRequestService {
         // 게시글 저장
         boardRepository.save(board);
 
-        return BoardDto.ResponseDto.builder()
+        return BoardResponseDto.builder()
             .boardId(board.getBoardId())
             .title(board.getTitle())
             .content(board.getContent())
@@ -178,10 +179,10 @@ public class BoardService implements BoardRequestService {
      */
     @Override
     @Transactional
-    public BoardDto.ResponseDto putBoard(String boardId, BoardDto.RequestDto boardRequestDto) {
+    public BoardResponseDto putBoard(String boardId, BoardRequestDto boardRequestDto) {
 
         // 게시글 조회
-        Board findBoard = boardRepository.findById(boardId).orElseThrow(NoSuchElementException::new);
+        BoardEntity findBoard = boardRepository.findById(boardId).orElseThrow(NoSuchElementException::new);
 
         // TODO: @Transactional 어노테이션 사용하여 update 하려는 경우
         // @Transactional 어노테이션을 명시하여 repository save() 호출 없이 저장 가능.
@@ -193,17 +194,19 @@ public class BoardService implements BoardRequestService {
         );
 
         // TODO: @Transactional 어노테이션이 없이 update 하려는 경우
-//        Board board = Board.builder()
+//        BoardEntity board = BoardEntity.builder()
 //            .title(boardRequestDto.getTitle())
 //            .content(boardRequestDto.getContent())
 //            .author(boardRequestDto.getAuthor())
 //            .build();
-//
-//        findBoard.updateBoard(board);
-//
+//        findBoard.updateBoard(
+//            board.getTitle(),
+//            board.getContent(),
+//            board.getAuthor()
+//        );
 //        boardRepository.save(findBoard);
 
-        return BoardDto.ResponseDto.builder()
+        return BoardResponseDto.builder()
             .boardId(findBoard.getBoardId())
             .title(findBoard.getTitle())
             .content(findBoard.getContent())

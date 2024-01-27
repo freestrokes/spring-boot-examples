@@ -1,4 +1,4 @@
-package com.freestrokes.domain;
+package com.freestrokes.domain.board;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity(name = "board_comment")
-public class BoardComment {
+public class BoardCommentEntity {
 
     // TODO: id 필드에 sequence 적용하려는 경우엔 아래와 같이 사용.
 //    @Id
@@ -34,7 +34,7 @@ public class BoardComment {
     // 사용하지 않으면 JPA 내부적으로 조인 테이블을 생성해서 매핑하게 됨.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
-    private Board board;
+    private BoardEntity board;
 
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
@@ -51,9 +51,9 @@ public class BoardComment {
     }
 
     @Builder(toBuilder = true)
-    public BoardComment(
+    public BoardCommentEntity(
         String boardCommentId,
-        Board board,
+        BoardEntity board,
         String content,
         String author
     ) {

@@ -1,4 +1,4 @@
-package com.freestrokes.domain;
+package com.freestrokes.domain.board;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity(name = "board")
-public class Board {
+public class BoardEntity {
 
     // TODO: id 필드에 sequence 적용하려는 경우엔 아래와 같이 사용.
 //    @Id
@@ -58,7 +58,7 @@ public class Board {
         orphanRemoval = true
 //        cascade = CascadeType.REMOVE
     )
-    private List<BoardComment> boardComments;
+    private List<BoardCommentEntity> boardComments;
 
     @Column(name = "title", length = 500)
     private String title;
@@ -80,12 +80,12 @@ public class Board {
     }
 
     @Builder(toBuilder = true)
-    public Board(
+    public BoardEntity(
         String boardId,
         String title,
         String content,
         String author,
-        List<BoardComment> boardComments
+        List<BoardCommentEntity> boardComments
     ) {
         this.boardId = boardId;
         this.title = title;

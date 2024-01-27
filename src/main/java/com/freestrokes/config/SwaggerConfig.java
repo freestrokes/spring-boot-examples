@@ -1,35 +1,12 @@
 package com.freestrokes.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.security.SecurityScheme;
-import io.swagger.v3.oas.models.OpenAPI;
 //import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.servers.Server;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springdoc.core.GroupedOpenApi;
-import org.springdoc.core.SpringDocUtils;
-import org.springdoc.core.converters.PageableOpenAPIConverter;
-import org.springdoc.core.customizers.OpenApiCustomiser;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpEntity;
-
-import javax.validation.constraints.Min;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
-
-import static org.springdoc.core.SpringDocUtils.getConfig;
 
 //@SecurityScheme(
 //    type = SecuritySchemeType.APIKEY,
@@ -46,7 +23,7 @@ import static org.springdoc.core.SpringDocUtils.getConfig;
 )
 @RequiredArgsConstructor
 @Configuration
-public class SwaggerConfiguration {
+public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi allApi() {

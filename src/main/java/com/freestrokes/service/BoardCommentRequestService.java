@@ -1,6 +1,7 @@
 package com.freestrokes.service;
 
-import com.freestrokes.dto.BoardCommentDto;
+import com.freestrokes.dto.request.board.BoardCommentRequestDto;
+import com.freestrokes.dto.response.board.BoardCommentResponseDto;
 
 /**
  * 게시글 댓글 요청을 위한 서비스 인터페이스
@@ -12,7 +13,7 @@ public interface BoardCommentRequestService {
      * @param boardCommentRequestDto 게시글 댓글 정보
      * @return 등록한 게시글 댓글 정보
      */
-    BoardCommentDto.ResponseDto postBoardComment(BoardCommentDto.RequestDto boardCommentRequestDto);
+    BoardCommentResponseDto postBoardComment(BoardCommentRequestDto boardCommentRequestDto);
 
     /**
      * 게시글 댓글 ID를 이용한 게시글 댓글 수정.
@@ -20,7 +21,7 @@ public interface BoardCommentRequestService {
      * @param boardCommentRequestDto 게시글 댓글 정보
      * @return 수정한 게시글 댓글 정보
      */
-    BoardCommentDto.ResponseDto putBoardComment(String boardCommentId, BoardCommentDto.RequestDto boardCommentRequestDto);
+    BoardCommentResponseDto putBoardComment(String boardCommentId, BoardCommentRequestDto boardCommentRequestDto);
 
     /**
      * 게시글 댓글 ID를 이용한 게시글 댓글 삭제

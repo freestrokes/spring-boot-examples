@@ -1,11 +1,11 @@
-package com.freestrokes.repository;
+package com.freestrokes.repository.board;
 
-import com.freestrokes.domain.BoardComment;
+import com.freestrokes.domain.board.BoardCommentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BoardCommentRepository extends JpaRepository<BoardComment, String> {
+public interface BoardCommentRepository extends JpaRepository<BoardCommentEntity, String> {
 
     // TODO: @EntityGraph 어노테이션
     // 즉시로딩(EAGER) 방식으로 매핑된 연관관계의 객체를 조회할 때도 사용 가능.

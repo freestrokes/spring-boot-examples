@@ -1,10 +1,11 @@
 package com.freestrokes.service;
 
-import com.freestrokes.domain.Board;
-import com.freestrokes.domain.BoardComment;
-import com.freestrokes.dto.BoardCommentDto;
-import com.freestrokes.repository.BoardCommentRepository;
-import com.freestrokes.repository.BoardRepository;
+import com.freestrokes.domain.board.BoardCommentEntity;
+import com.freestrokes.domain.board.BoardEntity;
+import com.freestrokes.dto.request.board.BoardCommentRequestDto;
+import com.freestrokes.dto.response.board.BoardCommentResponseDto;
+import com.freestrokes.repository.board.BoardCommentRepository;
+import com.freestrokes.repository.board.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -27,13 +28,13 @@ public class BoardCommentMockService implements BoardCommentRequestService {
      */
     @Override
     @Transactional
-    public BoardCommentDto.ResponseDto postBoardComment(BoardCommentDto.RequestDto boardCommentRequestDto) {
+    public BoardCommentResponseDto postBoardComment(BoardCommentRequestDto boardCommentRequestDto) {
 
         // 게시글 조회
-        Board findBoard = boardRepository.findById(boardCommentRequestDto.getBoardId()).orElseThrow(NoSuchElementException::new);
+        BoardEntity findBoard = boardRepository.findById(boardCommentRequestDto.getBoardId()).orElseThrow(NoSuchElementException::new);
 
         // 게시글 댓글 생성
-        BoardComment boardComment = BoardComment.builder()
+        BoardCommentEntity boardComment = BoardCommentEntity.builder()
             .board(findBoard)
             .content(boardCommentRequestDto.getContent())
             .author(boardCommentRequestDto.getAuthor())
@@ -42,7 +43,7 @@ public class BoardCommentMockService implements BoardCommentRequestService {
         // 게시글 댓글 등록
         boardCommentRepository.save(boardComment);
 
-        return BoardCommentDto.ResponseDto.builder()
+        return BoardCommentResponseDto.builder()
             .boardCommentId(boardComment.getBoardCommentId())
             .board(boardComment.getBoard())
             .content(boardComment.getContent())
@@ -59,13 +60,13 @@ public class BoardCommentMockService implements BoardCommentRequestService {
      */
     @Override
     @Transactional
-    public BoardCommentDto.ResponseDto putBoardComment(String boardCommentId, BoardCommentDto.RequestDto boardCommentRequestDto) {
+    public BoardCommentResponseDto putBoardComment(String boardCommentId, BoardCommentRequestDto boardCommentRequestDto) {
 
         // 게시글 댓글 조회
-        BoardComment findBoardComment = boardCommentRepository.findById(boardCommentId).orElseThrow(NoSuchElementException::new);
+        BoardCommentEntity findBoardComment = boardCommentRepository.findById(boardCommentId).orElseThrow(NoSuchElementException::new);
 
         // TODO: CASE2) repository 메서드에 @EntityGraph 사용하여 연관 객체 조회
-//        BoardComment findBoardComment = boardCommentRepository.findByBoardCommentId(boardCommentId).orElseThrow(NoSuchElementException::new);
+//        BoardCommentEntity findBoardComment = boardCommentRepository.findByBoardCommentId(boardCommentId).orElseThrow(NoSuchElementException::new);
 
         // 게시글 댓글 저장
         findBoardComment.updateBoardComment(
@@ -80,11 +81,11 @@ public class BoardCommentMockService implements BoardCommentRequestService {
         // CASE1) repository 메서드에 객체그래프 탐색을 위한 @EntityGraph를 사용
         // CASE2) proxy 객체의 값을 꺼내와서 DTO에 담아 반환
 
-        return BoardCommentDto.ResponseDto.builder()
+        return BoardCommentResponseDto.builder()
             .boardCommentId(findBoardComment.getBoardCommentId())
             // TODO: CASE1) proxy 객체의 값을 꺼내서 DTO에 담아 반환
             .board(
-                Board.builder()
+                BoardEntity.builder()
                     .boardId(findBoardComment.getBoard().getBoardId())
                     .title(findBoardComment.getBoard().getTitle())
                     .content(findBoardComment.getBoard().getContent())

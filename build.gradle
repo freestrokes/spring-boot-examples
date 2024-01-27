@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.7.14'
+	id 'org.springframework.boot' version '2.7.18'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	id 'java'
 }
@@ -16,18 +16,24 @@ repositories {
 sourceSets {
 	main {
 		resources {
-			srcDir 'src/main/resources/config'
+			srcDir 'src/main/resources'
 		}
 		java {
-			srcDirs = ['src/main/java']
+			srcDirs 'src/main/java'
 		}
 	}
 }
 
 bootJar {
+	enabled = true
     mainClass = 'com.freestrokes.SpringBootExamplesApplication'
     archiveFileName = 'freestrokes-api.jar'
     destinationDirectory = file('./target')
+	manifest {
+		attributes 'Implementation-Title': 'Spring Boot Examples API'
+		attributes 'Implementation-Version': '1.0.0'
+		attributes 'Implementation-Timstamp': new Date()
+	}
 }
 
 test {
@@ -35,10 +41,17 @@ test {
 }
 
 wrapper {
-	gradleVersion = '7.5.1'
+	gradleVersion = '7.6.1'
 }
 
-tasks.withType(JavaCompile) {
+// 프로퍼티 중복 방지를 위한 설정
+tasks {
+	processResources {
+		duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
+	}
+}
+
+compileJava {
 	options.encoding = 'UTF-8'
 }
 

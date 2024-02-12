@@ -56,14 +56,14 @@ public class SecurityConfig {
             .and()  // URL 인증여부 설정
                 .authorizeRequests()
                 .antMatchers(
+                    "/css/**",
+                    "/favicon.ico",
+                    "/exception/**",
                     "/swagger*/**",
                     "/api/v1/health-check",
                     "/api/v1/auth/**",
                     "/api/v1/boards/**",
                     "/api/v1/board-comments/**",
-                    "/css/**",
-                    "/exception/**",
-                    "/favicon.ico",
                     "/login/oauth2/code/google",
                     "/user/oauth/password/**"
                 )

@@ -7,8 +7,11 @@ import com.freestrokes.properties.ApplicationProperties;
 import com.freestrokes.constants.PathConstants;
 import com.freestrokes.service.BoardService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,12 +34,13 @@ public class BoardController {
     // TODO: DI(Dependency Injection)에 대한 설명
     // 일반적으로 아래 코드처럼 생성자를 통해 의존성 주입을 설정해줌.
     // 스프링 IoC Container가 해당 의존성 타입에 맞는 bean을 만들어서 주입 (의존성 관리)
-    // 의존성 주입에는 생성자, 필드 + setter 2가지 방법이 있는데
-    // 레퍼런스에서는 생성자를 이용한 방법을 권장 (생성자는 lombok의 @RequiredArgsConstructor를 사용해서 생략 가능)
-    // 필드 + setter를 사용한 경우엔 의존성 주입 없이 인스턴스 생성이 가능하다는 문제가 있음. (이 경우엔 @Autowired 어노테이션을 사용해야 함)
-    // 생성자를 사용한 경우엔 순환 참조가 발생할 수 있음.
+    // 의존성 주입에는 생성자, 필드, setter 3가지 방법이 있는데
+    // 레퍼런스에서는 생성자를 이용한 방법을 권장. (생성자는 lombok의 @RequiredArgsConstructor를 사용해서 생략 가능)
+    // 필드, setter를 사용한 경우엔 의존성 주입 없이 인스턴스 생성이 가능하다는 문제가 있음. (이 경우엔 @Autowired 어노테이션을 사용해야 함)
+    // 생성자를 사용한 경우엔 컴파일 시점에서 순환 참조 에러를 확인하여 방지할 수 있음.
 
     // TODO: 생성자를 이용한 의존성 주입(DI) 예시.
+    // lombok의 @RequiredArgsConstructor 사용해서 생략 가능.
 //    public BoardController(ApplicationProperties applicationProperties, BoardService boardService) {
 //        this.applicationProperties = applicationProperties;
 //        this.boardService = boardService;
@@ -47,12 +51,15 @@ public class BoardController {
         summary = "게시글 목록 조회",
         description = "페이징을 이용하여 게시글 목록을 조회한다."
     )
+    @Parameters({
+        @Parameter(name = "pageable", description = "Parameter for Pageable")
+    })
     // TODO: AOP 확인을 위해 추가 (@LogExecutionTime)
     @LogExecutionTime
     public ResponseEntity<Page<BoardResponseDto>> getBoards(
         // TODO: size, sort, direction 프로퍼티를 설정한 @PageableDefault 예시
 //        @ParameterObject @PageableDefault(size = 10, sort = "modifiedAt", direction = Sort.Direction.DESC) Pageable pageable
-        @ParameterObject @PageableDefault(size = 10) Pageable pageable
+        @PageableDefault(size = 10) Pageable pageable
     ) throws Exception {
 
         // TODO: ApplicationProperties 테스트를 위해 추가

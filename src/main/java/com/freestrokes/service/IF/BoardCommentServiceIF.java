@@ -1,4 +1,4 @@
-package com.freestrokes.service;
+package com.freestrokes.service.IF;
 
 import com.freestrokes.dto.request.board.BoardCommentRequestDto;
 import com.freestrokes.dto.response.board.BoardCommentResponseDto;
@@ -6,7 +6,7 @@ import com.freestrokes.dto.response.board.BoardCommentResponseDto;
 /**
  * 게시글 댓글 요청을 위한 서비스 인터페이스
  */
-public interface BoardCommentRequestService {
+public interface BoardCommentServiceIF {
 
     /**
      * 게시글 댓글 등록

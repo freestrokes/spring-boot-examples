@@ -1,4 +1,4 @@
-package com.freestrokes.service;
+package com.freestrokes.service.IF;
 
 import com.freestrokes.dto.request.board.BoardRequestDto;
 import com.freestrokes.dto.response.board.BoardResponseDto;
@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 /**
  * 게시글 요청을 위한 서비스 인터페이스
  */
-public interface BoardRequestService {
+public interface BoardServiceIF {
 
     /**
      * 게시글 목록을 조회.

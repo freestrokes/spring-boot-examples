@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.NoSuchElementException;
 
 @Service
-@Profile("!dev")
+//@Profile("!dev")
 @RequiredArgsConstructor
-public class BoardCommentService implements BoardCommentRequestService {
+public class BoardCommentService {
 
     private final BoardRepository boardRepository;
     private final BoardCommentRepository boardCommentRepository;
@@ -26,7 +26,6 @@ public class BoardCommentService implements BoardCommentRequestService {
      * @param boardCommentRequestDto 게시글 댓글 정보
      * @return 등록한 게시글 댓글 정보
      */
-    @Override
     @Transactional
     public BoardCommentResponseDto postBoardComment(BoardCommentRequestDto boardCommentRequestDto) {
 
@@ -58,7 +57,6 @@ public class BoardCommentService implements BoardCommentRequestService {
      * @param boardCommentRequestDto 게시글 댓글 정보
      * @return 수정한 게시글 댓글 정보
      */
-    @Override
     @Transactional
     public BoardCommentResponseDto putBoardComment(String boardCommentId, BoardCommentRequestDto boardCommentRequestDto) {
 
@@ -104,7 +102,6 @@ public class BoardCommentService implements BoardCommentRequestService {
      * 게시글 댓글 ID를 이용한 게시글 댓글 삭제
      * @param boardCommentId 게시글 댓글 ID
      */
-    @Override
     @Transactional
     public void deleteBoardComment(String boardCommentId) {
         // 게시글 댓글 삭제

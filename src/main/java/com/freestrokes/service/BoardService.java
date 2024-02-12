@@ -5,6 +5,7 @@ import com.freestrokes.domain.board.BoardEntity;
 import com.freestrokes.dto.request.board.BoardRequestDto;
 import com.freestrokes.dto.response.board.BoardResponseDto;
 import com.freestrokes.repository.board.BoardRepository;
+//import com.freestrokes.vo.BoardVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
@@ -19,9 +20,9 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
-@Profile("!dev")
+//@Profile("!dev")
 @RequiredArgsConstructor
-public class BoardService implements BoardRequestService {
+public class BoardService {
 
     private final BoardRepository boardRepository;
 
@@ -36,14 +37,21 @@ public class BoardService implements BoardRequestService {
     // but, RDB에도 연관관계가 설정되어 있지 않은 경우엔 LazyInitializationException 계속 발생할 수 있음
     // 이러한 경우엔 @ManyToOne 설정해준 쪽에서 @EntityGraph 사용하여 해결.
 
+    // TODO: interface + implements 구조
+    // 반드시 필요한 경우에만 interface를 생성하여 구조화해준다.
+    // 모든 클래스에 대해 interface를 만들어둘 필요는 없다.
+
     /**
      * 게시글 목록을 조회
      * @param pageable 페이징 정보
      * @return 게시글 목록
      */
-    @Override
     @Transactional(readOnly = true)
     public Page<BoardResponseDto> getBoards(Pageable pageable) {
+
+        // TODO
+        // Page 객체의 타입을 인터페이스로 사용할 수 없는 이유 찾아보기
+//        List<BoardVo> boardList = boardRepository.getBoardList();
 
         Page<BoardEntity> findBoards = boardRepository.findAll(pageable);
         List<BoardResponseDto> boardsResponseDto = new ArrayList<>();
@@ -138,7 +146,6 @@ public class BoardService implements BoardRequestService {
      * @param boardRequestDto 게시글 정보
      * @return 등록한 게시글 정보
      */
-    @Override
     @Transactional
     public BoardResponseDto postBoard(BoardRequestDto boardRequestDto) {
 
@@ -177,7 +184,6 @@ public class BoardService implements BoardRequestService {
      * @param boardRequestDto 게시글 정보
      * @return 수정한 게시글 정보
      */
-    @Override
     @Transactional
     public BoardResponseDto putBoard(String boardId, BoardRequestDto boardRequestDto) {
 
@@ -219,7 +225,6 @@ public class BoardService implements BoardRequestService {
      * 게시글 ID를 이용하여 게시글을 삭제.
      * @param boardId 게시글 ID
      */
-    @Override
     @Transactional
     public void deleteBoard(String boardId) {
         // 게시글 삭제

@@ -94,4 +94,26 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOriginPatterns(
+            List.of(
+                "http://localhost:[*]",
+                "http://*.google.com",
+                "https://*.google.com",
+                "http://*.google.com:[*]",
+                "https://*.google.com:[*]",
+            )
+        );
+        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        corsConfiguration.setAllowedHeaders(List.of("*"));
+        corsConfiguration.setAllowCredentials(true);
+        
+        UrlBasedCorsConfigurationSource urlBasedCorsConfiguration = new UrlBasedCorsConfigurationSource();
+        urlBasedCorsConfiguration.registerCorsConfiguration("/**", corsConfiguration);
+        
+        return urlBasedCorsConfiguration;
+    }
+
 }

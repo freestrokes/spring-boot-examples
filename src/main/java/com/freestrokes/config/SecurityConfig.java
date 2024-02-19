@@ -16,6 +16,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 // TODO: @EnableWebSecurity
 // Spring Security 설정 활성화 어노테이션
@@ -103,7 +108,7 @@ public class SecurityConfig {
                 "http://*.google.com",
                 "https://*.google.com",
                 "http://*.google.com:[*]",
-                "https://*.google.com:[*]",
+                "https://*.google.com:[*]"
             )
         );
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));

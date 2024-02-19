@@ -24,6 +24,10 @@ sourceSets {
 	}
 }
 
+springBoot {
+	mainClass = 'com.freestrokes.SpringBootExamplesApplication'
+}
+
 bootJar {
 	enabled = true
     mainClass = 'com.freestrokes.SpringBootExamplesApplication'

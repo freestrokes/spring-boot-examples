@@ -1,6 +1,6 @@
 package com.freestrokes;
 
-import com.ahnlab.asd.presentation.external.api.common.constant.PathConstant;
+import com.freestrokes.constants.PathConstants;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +29,7 @@ class WebClientTests {
   public void contextLoads() {
     request()
       .get()
-      .uri(PathConstant.HEALTH_CHECK)
+      .uri(PathConstants.HEALTH_CHECK)
       .retrieve()
       .bodyToMono(Void.class)
       .block();

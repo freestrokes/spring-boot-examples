@@ -10,7 +10,7 @@ docker compose up -d
 ```
 ```shell
 # Application Run
-./gradlew clean bootRun --args='--spring.profiles.active=dev'
+./gradlew clean bootRun --args='--spring.profiles.active=dev --debug-jvm'
 ```
 
 ## Swagger API Docs
